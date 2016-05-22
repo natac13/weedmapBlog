@@ -1,0 +1,31 @@
+{
+  "name": "weedmaps-blog",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "work:start": "echo 'START' >> workLogfile.txt && date -d now >> workLogfile.txt && git add workLogfile.txt && git cm",
+    "work:end": "echo 'END' >> workLogfile.txt && date -d now >> workLogfile.txt && git add workLogfile.txt && git cm"
+
+  },
+  "dependencies": {
+    "meteor-node-stubs": "~0.2.0"
+  },
+  "description": "test project",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natac13/weedmapBlog.git"
+  },
+  "keywords": [
+    "meteor",
+    "react",
+    "redux"
+  ],
+  "author": "Sean Campbell <sean.campbell13@gmail.com> (http://seancampbellnatac.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/natac13/weedmapBlog/issues"
+  },
+  "homepage": "https://github.com/natac13/weedmapBlog#readme"
+}
