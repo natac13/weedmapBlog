@@ -1,22 +1,25 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { connectToMeteor } from 'meteoredux';
 
-import './main.html';
+Meteor.subscribe('blogposts');
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
+import configureStore from '../imports/store/configureStore.js';
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
+import '../imports/startup/accounts-config.js';
+import App from '../imports/ui/App.jsx';
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+const store = configureStore();
+connectToMeteor(store);
+
+Meteor.startup(() => {
+  const rootElement = document.getElementById('render-target');
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootElement
+  );
 });
