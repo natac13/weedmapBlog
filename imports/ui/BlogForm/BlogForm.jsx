@@ -4,10 +4,14 @@ import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import pure from 'recompose/pure';
 import { Meteor } from 'meteor/meteor';
+import {
+  blogpostAdd,
+  blogpostDelete,
+} from '../../actions/';
 
+const FORM_NAME = 'blogEntry';
 
 function BlogForm(props) {
-  console.log(props);
   const {
     fields: { title, entry },
     handleSubmit,
@@ -60,16 +64,30 @@ BlogForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-function onSubmit(values) {
-  console.log(values);
+function onSubmit(values, dispatch) {
+  console.log(values)
   return new Promise((resolve, reject) => {
-    resolve()
+    const {
+      title,
+      entry,
+    } = values;
+    const currentUser = Meteor.user();
+    const blogpostData = {
+      title,
+      entry,
+      createdAt: new Date(),
+      owner: currentUser._id,
+      username: currentUser.username,
+    };
+    dispatch(blogpostAdd(blogpostData));
+    dispatch(reset(FORM_NAME));
+    resolve();
   });
 }
 
 export default compose(
   reduxForm({
-    form: 'blogEntry',
+    form: FORM_NAME,
     fields: ['title', 'entry'],
   }),
   withProps({ onSubmit }),

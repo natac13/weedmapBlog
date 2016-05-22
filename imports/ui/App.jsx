@@ -20,6 +20,12 @@ function App(props) {
           <li onClick={() => props.actions.push('/new-entry')}>
             New Entry
           </li>
+          <li onClick={() => props.actions.push('/login')}>
+            Login
+          </li>
+          <li onClick={() => props.actions.push('/blogposts')}>
+            Blogposts
+          </li>
         </ul>
       </nav>
       {/* Header */}
