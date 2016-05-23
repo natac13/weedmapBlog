@@ -2,10 +2,10 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 
-import App from '../ui/App.jsx';
-import BlogForm from '../ui/BlogForm/';
-import Login from '../ui/Login/';
-import BlogpostList from '../ui/BlogpostList/';
+import App from '../components/App.jsx';
+import BlogForm from '../components/BlogForm/';
+import Login from '../components/Login/';
+import BlogpostList from '../components/BlogpostList/';
 
 function requireAuth(nextState, replace) {
   console.log('whatNow')
@@ -13,8 +13,8 @@ function requireAuth(nextState, replace) {
   if (!Meteor.user()) {
     replace({
       pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    })
+      state: { nextPathname: nextState.location.pathname },
+    });
   }
 }
 

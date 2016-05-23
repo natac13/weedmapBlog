@@ -6,7 +6,7 @@ import {
 } from '../constants/';
 import { bindReactiveData } from 'meteoredux';
 
-import Blogposts from '../api/Blogposts.js';
+import Blogposts from '../../imports/api/Blogposts.js';
 const initialState = {};
 
 function blogpost(state = initialState, action) {

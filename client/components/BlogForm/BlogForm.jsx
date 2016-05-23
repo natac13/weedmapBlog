@@ -4,16 +4,23 @@ import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import pure from 'recompose/pure';
 import { Meteor } from 'meteor/meteor';
+import { curry } from 'ramda';
 import {
   blogpostAdd,
   blogpostDelete,
 } from '../../actions/';
 
+import fileToUri from '../../../imports/core/fileToURI.js';
+
+import Input from 'react-toolbox/lib/input';
+
+import style from './style.scss';
+
 const FORM_NAME = 'blogEntry';
 
 function BlogForm(props) {
   const {
-    fields: { title, entry },
+    fields: { title, entry, image },
     handleSubmit,
     onSubmit,
   } = props;
@@ -21,7 +28,7 @@ function BlogForm(props) {
   return (
     <form
       acceptCharset="utf-8"
-      className="blog-form"
+      className={style.wrapper}
       onSubmit={handleSubmit(onSubmit)}
     >
       <fieldset>
@@ -50,6 +57,14 @@ function BlogForm(props) {
           />
         </p>
 
+        <Input
+          id="img"
+          type="file"
+          value={null}
+          className={style.input}
+          onChange={props.fileToUri(image)}
+        />
+
       </fieldset>
       <button type="submit">
         Submit
@@ -65,16 +80,17 @@ BlogForm.propTypes = {
 };
 
 function onSubmit(values, dispatch) {
-  console.log(values)
   return new Promise((resolve, reject) => {
     const {
       title,
       entry,
+      image,
     } = values;
     const currentUser = Meteor.user();
     const blogpostData = {
       title,
       entry,
+      image,
       createdAt: new Date(),
       owner: currentUser._id,
       username: currentUser.username,
@@ -85,11 +101,12 @@ function onSubmit(values, dispatch) {
   });
 }
 
+
 export default compose(
   reduxForm({
     form: FORM_NAME,
-    fields: ['title', 'entry'],
+    fields: ['title', 'entry', 'image'],
   }),
-  withProps({ onSubmit }),
+  withProps({ onSubmit, fileToUri }),
   pure,
 )(BlogForm);

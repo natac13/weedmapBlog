@@ -7,12 +7,11 @@ import { connectToMeteor } from 'meteoredux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import createRoutes from '../imports/routes/';
-
+import createRoutes from './routes/';
 
 Meteor.subscribe('blogposts');
 
-import configureStore from '../imports/store/configureStore.js';
+import configureStore from './store/configureStore.js';
 
 import '../imports/startup/accounts-config.js';
 

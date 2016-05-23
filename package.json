@@ -11,13 +11,16 @@
     "classnames": "2.2.5",
     "meteor-node-stubs": "~0.2.0",
     "meteoredux": "0.0.2",
+    "normalize.css": "4.1.1",
     "ramda": "0.21.0",
-    "react": "15.0.2",
+    "react": "15.1.0",
+    "react-addons-css-transition-group": "15.1.0",
     "react-addons-pure-render-mixin": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
     "react-router": "2.4.1",
     "react-router-redux": "4.0.4",
+    "react-toolbox": "0.16.2",
     "recompose": "0.19.0",
     "redux": "3.5.2",
     "redux-actions": "0.9.1",
@@ -45,5 +48,20 @@
   "bugs": {
     "url": "https://github.com/natac13/weedmapBlog/issues"
   },
-  "homepage": "https://github.com/natac13/weedmapBlog#readme"
+  "homepage": "https://github.com/natac13/weedmapBlog#readme",
+  "cssModules": {
+    "extensions": [
+      "scss"
+    ],
+    "globalVariables": [
+      "node_modules/react-toolbox/lib/_colors.scss",
+      {
+        "theme-building": true
+      },
+      "client/toolbox-theme.scss"
+    ],
+    "outputJsFilePath": {
+      "node_modules/react-toolbox/.*": "{dirname}/{basename}"
+    }
+  }
 }

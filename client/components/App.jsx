@@ -12,18 +12,19 @@ import * as ActionCreators from '../actions/';
 
 function App(props) {
   console.log(props)
+  console.log(Meteor.user())
   return (
     <div className="app-wrapper">
       Welcome, to WeedMaps Blogs
       <nav>
         <ul>
-          <li onClick={() => props.actions.push('/new-entry')}>
+          <li onClick={props.goTo(props.actions.push, '/new-entry')}>
             New Entry
           </li>
-          <li onClick={() => props.actions.push('/login')}>
+          <li onClick={props.goTo(props.actions.push, '/login')}>
             Login
           </li>
-          <li onClick={() => props.actions.push('/blogposts')}>
+          <li onClick={props.goTo(props.actions.push, '/blogposts')}>
             Blogposts
           </li>
         </ul>
@@ -35,6 +36,12 @@ function App(props) {
     </div>
   );
 }
+
+const goTo = (pushAction, route) => (event) => {
+  event.preventDefault();
+  return pushAction(route);
+};
+
 
 //  Redux Connection
 function mapStateToProps(state) {
@@ -53,7 +60,7 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withProps({ currentUser: Meteor.user() }),
+  withProps({ currentUser: Meteor.user(), goTo }),
   pure,
 )(App);
 
