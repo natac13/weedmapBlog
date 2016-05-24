@@ -13,16 +13,19 @@ import {
 import fileToUri from '../../../imports/core/fileToURI.js';
 
 import Input from 'react-toolbox/lib/input';
+import { Button } from 'react-toolbox/lib/button';
 
 import style from './style.scss';
 
 const FORM_NAME = 'blogEntry';
 
 function BlogForm(props) {
+  console.log(props)
   const {
     fields: { title, entry, image },
     handleSubmit,
     onSubmit,
+    submitting,
   } = props;
 
   return (
@@ -39,9 +42,9 @@ function BlogForm(props) {
           id="title"
           type="text"
           label="Title"
-          multiline={1}
-          rows={1}
           maxLength={120}
+          required
+          error={!!props.error && props.error.includes('Title') && props.error}
           {...title}
         />
 
@@ -51,11 +54,12 @@ function BlogForm(props) {
           multiline={true}
           rows={10}
           label="Blog Entry"
-          hint="A long time ago..."
+          hint="A long time ago, In a galaxy far far away..."
+          required
+          error={!!props.error && props.error.includes('Blog') && props.error}
           {...entry}
           value={entry.value || ''}
         />
-
 
         <Input
           id="img"
@@ -64,11 +68,14 @@ function BlogForm(props) {
           className={style.input}
           onChange={props.fileToUri(image)}
         />
-
       </fieldset>
-      <button type="submit">
-        Submit
-      </button>
+      <Button
+        flat
+        disabled={submitting}
+        type="submit"
+        label="Post!"
+        neutral={false}
+      />
     </form>
   );
 }
@@ -86,18 +93,24 @@ function onSubmit(values, dispatch) {
       entry,
       image,
     } = values;
-    const currentUser = Meteor.user();
-    const blogpostData = {
-      title,
-      entry,
-      image,
-      createdAt: new Date(),
-      owner: currentUser._id,
-      username: currentUser.username,
-    };
-    dispatch(blogpostAdd(blogpostData));
-    dispatch(reset(FORM_NAME));
-    resolve();
+    if (title.length < 5) {
+      reject({ _error: 'Title too short. Minimum 5 characters.' })
+    } else if (entry.length < 150) {
+      reject({ _error: 'Blog Entry too short: Minimum 150 characters.' });
+    } else {
+      const currentUser = Meteor.user();
+      const blogpostData = {
+        title,
+        entry,
+        image,
+        createdAt: new Date(),
+        owner: currentUser._id,
+        username: currentUser.username,
+      };
+      dispatch(blogpostAdd(blogpostData));
+      dispatch(reset(FORM_NAME));
+      resolve();
+    }
   });
 }
 

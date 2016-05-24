@@ -4,6 +4,7 @@ import withProps from 'recompose/withProps';
 import pure from 'recompose/pure';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { curry } from 'ramda';
 
 import * as ActionCreators from '../../actions/';
 
@@ -17,10 +18,15 @@ function BlogpostList(props) {
   const {
     blogposts,
     createDescription,
+    actions,
+    goTo,
   } = props;
 
   const list = blogposts.map((blogpost) => (
-    <Card style={{width: '350px'}}>
+    <Card
+      onClick={goTo(actions.push, blogpost._id)}
+      style={{width: '350px'}}
+    >
       <CardTitle
         title={blogpost.username}
       />
@@ -49,6 +55,11 @@ BlogpostList.propTypes = {
   blogposts: PropTypes.array.isRequired,
 };
 
+const goTo = curry(function goTo(pushFn, id, event) {
+  event.preventDefault();
+  pushFn(`/blogpost/${id}`)
+});
+
 function createDescription(text = '') {
   return text.slice(0, 249);
 }
@@ -69,6 +80,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   pure,
-  withProps({ createDescription }),
+  withProps({ createDescription, goTo }),
   connect(mapStateToProps, mapDispatchToProps),
 )(BlogpostList);
