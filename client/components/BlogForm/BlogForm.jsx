@@ -35,27 +35,27 @@ function BlogForm(props) {
         <legend>
           New Blog Post
         </legend>
-        <p>
-          <label htmlFor="blog-title">
-            Blog Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            id="blog-title"
-            {...title}
-          />
-        </p>
-        <p>
-          <label htmlFor="blog-entry">
-            Blog entry
-          </label>
-          <textarea
-            id="blog-entry"
-            {...entry}
-            value={entry.value || ''}
-          />
-        </p>
+        <Input
+          id="title"
+          type="text"
+          label="Title"
+          multiline={1}
+          rows={1}
+          maxLength={120}
+          {...title}
+        />
+
+        <Input
+          id="blog-entry"
+          type="text"
+          multiline={true}
+          rows={10}
+          label="Blog Entry"
+          hint="A long time ago..."
+          {...entry}
+          value={entry.value || ''}
+        />
+
 
         <Input
           id="img"
