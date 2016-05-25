@@ -9,10 +9,9 @@ import { curry } from 'ramda';
 import * as ActionCreators from '../../actions/';
 
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-
+import { Button } from 'react-toolbox/lib/button'
 
 import style from './style.scss';
-
 
 function BlogpostList(props) {
   const {
@@ -24,8 +23,7 @@ function BlogpostList(props) {
 
   const list = blogposts.map((blogpost) => (
     <Card
-      onClick={goTo(actions.push, blogpost._id)}
-      style={{width: '350px'}}
+      className={style.cardWrapper}
     >
       <CardTitle
         title={blogpost.username}
@@ -39,8 +37,7 @@ function BlogpostList(props) {
       />
       <CardText>{createDescription(blogpost.entry)}</CardText>
       <CardActions>
-        {/*<Button label="Action 1" />
-        <Button label="Action 2" />*/}
+        <Button label="Full Post" onClick={goTo(actions.push, blogpost._id)} />
       </CardActions>
     </Card>
   ));
@@ -61,7 +58,13 @@ const goTo = curry(function goTo(pushFn, id, event) {
 });
 
 function createDescription(text = '') {
-  return text.slice(0, 249);
+  let ending;
+  if (text.length > 250) {
+    ending = '...';
+  } else {
+    ending = '.';
+  }
+  return text.slice(0, 249) + ending;
 }
 
 //  Redux Connection
