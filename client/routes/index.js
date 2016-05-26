@@ -2,10 +2,9 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 
-import withProps from 'recompose/withProps';
-const withCurrentUserProp = withProps({ currentUser: Meteor.user() });
 
-import App from '../components/App.jsx';
+import App from '../containers/App/';
+
 import BlogForm from '../components/BlogForm/';
 import Login from '../components/Login/';
 import BlogpostList from '../components/BlogpostList/';
@@ -29,7 +28,7 @@ export default function configureRoutes(history) {
       <Route path="/new-entry" component={BlogForm} onEnter={requireAuth} />
       <Route path="/login" component={Login} />
       <Route path="/blogposts" component={BlogpostList} />
-      <Route path="/blogpost/:id" component={withProps({ currentUser: Meteor.user() })(BlogpostView)} />
+      <Route path="/blogpost/:id" component={BlogpostView} />
       <Route path="/blogpost/:id/update" component={BlogForm} onEnter={requireAuth} />
     </Router>
   );

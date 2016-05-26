@@ -18,7 +18,7 @@ function BlogpostView(props) {
   const userId = Meteor.userId();
   const {
     blogpost,
-    actions,
+    actions: { push, blogpostDelete },
     actionThunk,
     deleteThunk,
   } = props;
@@ -26,20 +26,22 @@ function BlogpostView(props) {
   return (
     <div className={style.wrapper}>
       <header className={style.header}>
-        <h1>{blogpost.title}</h1>
+        <h1 className={style.title}>{blogpost.title}</h1>
       </header>
-      <article className={style.blogpost}>{blogpost.entry}</article>
+      <article className={style.entry}>
+        <p className={style.blog}>{blogpost.entry}</p>
+      </article>
         {!!userId && userId === blogpost.owner && (
-          <footer>
+          <footer className={style.footer}>
             <Button
               type="button"
               label="Update Blog"
-              onClick={actionThunk(actions.push, `/blogpost/${blogpost._id}/update`)}
+              onClick={actionThunk(push, `/blogpost/${blogpost._id}/update`)}
             />
             <Button
               type="button"
               label="Delete Blog"
-              onClick={deleteThunk(actions.blogpostDelete, blogpost._id, actions.push, '/blogposts')}
+              onClick={deleteThunk(blogpostDelete, blogpost._id, push, '/blogposts')}
             />
           </footer>
         )}

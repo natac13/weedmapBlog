@@ -10,7 +10,7 @@ import moment from 'moment';
 import * as ActionCreators from '../../actions/';
 
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import { Button } from 'react-toolbox/lib/button'
+import { Button } from 'react-toolbox/lib/button';
 
 import style from './style.scss';
 
@@ -24,6 +24,7 @@ function BlogpostList(props) {
 
   const list = blogposts.map((blogpost) => (
     <Card
+      key={blogpost._id}
       className={style.cardWrapper}
     >
       <CardTitle
@@ -66,7 +67,7 @@ BlogpostList.propTypes = {
 
 const goTo = curry(function goTo(pushFn, id, event) {
   event.preventDefault();
-  pushFn(`/blogpost/${id}`)
+  pushFn(`/blogpost/${id}`);
 });
 
 function createDescription(text = '') {
@@ -94,7 +95,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  pure,
-  withProps({ createDescription, goTo }),
   connect(mapStateToProps, mapDispatchToProps),
+  withProps({ createDescription, goTo }),
+  pure,
 )(BlogpostList);

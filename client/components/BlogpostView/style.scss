@@ -1,5 +1,39 @@
-.title {
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+}
+
+.header {
   display: flex;
   justify-content: center;
-  font-size: ms(3);
+  border-bottom: 1px solid #333;
+}
+
+.title {
+  font-size: $fs-6;
+}
+
+.entry {
+  width: 60%;
+  margin: 4em;
+}
+
+.blog {
+  font-size: $fs-1;
+
+  &:first-line {
+    font-size: $fs-2;
+  }
+
+  &:first-letter {
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
 }

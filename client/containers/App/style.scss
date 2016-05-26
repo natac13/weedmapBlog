@@ -1,0 +1,41 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 4%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.title {
+  font-size: $fs-6;
+}
+
+.name {
+  font-style: italic;
+}
+
+.link {
+  border-radius: 5px;
+  font-size: $fs-4;
+
+  &:hover,
+  &:focus {
+    background-color: darken($primary-color, 15%);
+    text-decoration: underline;
+  }
+}
