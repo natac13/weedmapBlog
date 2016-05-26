@@ -5,6 +5,7 @@ import pure from 'recompose/pure';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { curry } from 'ramda';
+import moment from 'moment';
 
 import * as ActionCreators from '../../actions/';
 
@@ -26,18 +27,29 @@ function BlogpostList(props) {
       className={style.cardWrapper}
     >
       <CardTitle
-        title={blogpost.username}
+        title={blogpost.title}
+        subtitle={moment(blogpost.createdAt).format('MMM Do, YYYY')}
       />
       <CardMedia
         aspectRatio="wide"
-        image={blogpost.image || "https://placeimg.com/800/450/nature"}
+        image={blogpost.image || 'https://placeimg.com/800/450/nature'}
       />
       <CardTitle
-        title={blogpost.title}
-      />
+        className={style.author}
+      >
+        <p>Author: <span className={style.name}>{blogpost.username}</span></p>
+      </CardTitle>
       <CardText>{createDescription(blogpost.entry)}</CardText>
-      <CardActions>
-        <Button label="Full Post" onClick={goTo(actions.push, blogpost._id)} />
+      <CardActions
+        className={style.actions}
+      >
+        <Button
+          label="Full Post"
+          flat
+          type="button"
+          primary
+          onClick={goTo(actions.push, blogpost._id)}
+        />
       </CardActions>
     </Card>
   ));

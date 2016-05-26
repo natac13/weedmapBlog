@@ -2,9 +2,29 @@
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+  justify-content: space-between;
+  align-items: center;
 
 }
 
 .cardWrapper {
-  width: 25%;
+  width: 30%;
+  flex: 1;
+  height: 80vh;
+}
+
+.actions {
+  margin: auto auto 0;
+
+  .fullPost {
+
+  }
+}
+
+.author {
+  margin-left: auto;
+
+  .name {
+    font-style: italic;
+  }
 }

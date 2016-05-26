@@ -14,6 +14,7 @@ Meteor.subscribe('blogposts');
 import configureStore from './store/configureStore.js';
 
 import '../imports/startup/accounts-config.js';
+import './stylesheets/setup.scss';
 
 const store = configureStore();
 connectToMeteor(store);

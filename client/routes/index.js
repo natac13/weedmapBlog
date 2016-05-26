@@ -29,7 +29,8 @@ export default function configureRoutes(history) {
       <Route path="/new-entry" component={BlogForm} onEnter={requireAuth} />
       <Route path="/login" component={Login} />
       <Route path="/blogposts" component={BlogpostList} />
-      <Route path="/blogpost/:id" component={withCurrentUserProp(BlogpostView)} />
+      <Route path="/blogpost/:id" component={withProps({ currentUser: Meteor.user() })(BlogpostView)} />
+      <Route path="/blogpost/:id/update" component={BlogForm} onEnter={requireAuth} />
     </Router>
   );
 }
