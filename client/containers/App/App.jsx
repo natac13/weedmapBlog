@@ -17,11 +17,15 @@ function App(props) {
     goTo,
     actions: { push },
   } = props;
+  const currentUser = Meteor.user();
   return (
     <div className="app-wrapper">
       <header className={style.header}>
         <h1 className={style.title}>Blogging App Using Meteor!</h1>
         <h3 className={style.name}>By: Sean Campbell</h3>
+        {!!currentUser &&
+          <h3 className={style.welcome}>Hello {currentUser.username}</h3>
+        }
       </header>
       <div className={style.nav}>
           <Button
@@ -39,11 +43,11 @@ function App(props) {
             onClick={goTo(push, '/blogposts')}
           />
           <Button
-            label="Login"
+            label="Accounts"
             flat
             primary
             className={style.link}
-            onClick={goTo(push, '/login')}
+            onClick={goTo(push, '/accounts')}
           />
       </div>
       {/* latestPost */}

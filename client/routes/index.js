@@ -26,7 +26,7 @@ export default function configureRoutes(history) {
     <Router history={history}>
       <Route path="/" component={App} />
       <Route path="/new-entry" component={BlogForm} onEnter={requireAuth} />
-      <Route path="/login" component={Login} />
+      <Route path="/accounts" component={Login} />
       <Route path="/blogposts" component={BlogpostList} />
       <Route path="/blogpost/:id" component={BlogpostView} />
       <Route path="/blogpost/:id/update" component={BlogForm} onEnter={requireAuth} />

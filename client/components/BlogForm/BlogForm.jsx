@@ -100,32 +100,32 @@ const onSubmit = curry(function onSubmit(update, values, dispatch) {
       image,
     } = values;
     if (title.length < 5) {
-      reject({ _error: 'Title too short. Minimum 5 characters.' });
-    } else if (entry.length < 150) {
-      reject({ _error: 'Blog Entry too short: Minimum 150 characters.' });
-    } else {
-      const currentUser = Meteor.user();
-      const blogpostData = {
-        title,
-        entry,
-        image,
-        createdAt: new Date(),
-        owner: currentUser._id,
-        username: currentUser.username,
-      };
-      const updatedData = {
-        _id,
-        title,
-        entry,
-        image,
-        updatedAt: new Date(),
-      };
-      // if update false then add the post otherwise update.
-      dispatch(!update ? blogpostAdd(blogpostData) : blogpostUpdate(updatedData));
-      setTimeout(() => dispatch(push('/blogposts')), 500);
-      dispatch(reset(FORM_NAME));
-      resolve();
+      return reject({ _error: 'Title too short. Minimum 5 characters.' });
     }
+    if (entry.length < 150) {
+      return reject({ _error: 'Blog Entry too short: Minimum 150 characters.' });
+    }
+    const currentUser = Meteor.user();
+    const blogpostData = {
+      title,
+      entry,
+      image,
+      createdAt: new Date(),
+      owner: currentUser._id,
+      username: currentUser.username,
+    };
+    const updatedData = {
+      _id,
+      title,
+      entry,
+      image,
+      updatedAt: new Date(),
+    };
+    // if update false then add the post otherwise update.
+    dispatch(!update ? blogpostAdd(blogpostData) : blogpostUpdate(updatedData));
+    setTimeout(() => dispatch(push('/blogposts')), 500);
+    dispatch(reset(FORM_NAME));
+    return resolve();
   });
 });
 
