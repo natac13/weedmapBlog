@@ -84,7 +84,7 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withProps({ currentUser: Meteor.user(), goTo }),
+  withProps({ goTo }),
   pure,
 )(App);
 
