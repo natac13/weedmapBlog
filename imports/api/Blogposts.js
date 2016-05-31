@@ -3,6 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 const Blogposts = new Mongo.Collection('blogposts');
+
+Blogposts.allow({
+  insert: (userId) => userId,
+  update: (userId, doc) => userId === doc.owner,
+  remove: (userId, doc) => userId === doc.owner,
+});
+
 export default Blogposts;
 
 if (Meteor.isServer) {

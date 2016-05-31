@@ -13,7 +13,7 @@ import BlogpostView from '../components/BlogpostView/';
 function requireAuth(nextState, replace) {
   if (!Meteor.user()) {
     replace({
-      pathname: '/login',
+      pathname: '/accounts',
       state: { nextPathname: nextState.location.pathname },
     });
   }

@@ -1,6 +1,12 @@
-import { TOGGLE_CREATE_ACCOUNT } from '../constants/';
+import { TOGGLE_CREATE_ACCOUNT, DELETE_ACCOUNT } from '../constants/';
+import { bindReactiveData } from 'meteoredux';
+import { Meteor } from 'meteor/meteor';
 
-const initialState = { createAccount: false };
+
+const initialState = {
+  createAccount: false,
+  currentUser: undefined,
+};
 
 function accounts(state = initialState, action) {
   switch (action.type) {
@@ -9,9 +15,19 @@ function accounts(state = initialState, action) {
         ...state,
         createAccount: !state.createAccount,
       };
+    case DELETE_ACCOUNT:
+      console.log(action.payload)
+      Meteor.users.remove(action.payload);
+      return state;
     default:
       return state;
   }
 }
 
-export default accounts;
+// think about handling login and logout here instead of in the component Login
+
+function reactiveData() {
+  return { currentUser: Meteor.user() };
+}
+
+export default bindReactiveData(accounts, reactiveData);

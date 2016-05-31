@@ -6,6 +6,7 @@ import pure from 'recompose/pure';
 import { bindActionCreators } from 'redux';
 import { find, propEq, curry } from 'ramda';
 import { Meteor } from 'meteor/meteor';
+import actionThunk from '../../../imports/core/actionThunk.js';
 
 import { Button } from 'react-toolbox/lib/button';
 
@@ -31,6 +32,9 @@ function BlogpostView(props) {
       <article className={style.entry}>
         <p className={style.blog}>{blogpost.entry}</p>
       </article>
+      <section>
+        <p className={style.author}>{blogpost.username}</p>
+      </section>
         {!!userId && userId === blogpost.owner && (
           <footer className={style.footer}>
             <Button
@@ -57,10 +61,6 @@ BlogpostView.propTypes = {
   deleteThunk: PropTypes.func,
 };
 
-const actionThunk = curry(function actionThunk(fn, param1, event) {
-  event.preventDefault();
-  return fn(param1);
-});
 
 const deleteThunk = curry(function deleteThunk(deleteFn, id, goTo, location, event) {
   event.preventDefault();

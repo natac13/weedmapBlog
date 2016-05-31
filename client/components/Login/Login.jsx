@@ -6,6 +6,8 @@ import { reduxForm, reset } from 'redux-form';
 import withProps from 'recompose/withProps';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import actionThunk from '../../../imports/core/actionThunk.js';
+
 
 import { bindActionCreators } from 'redux';
 
@@ -38,14 +40,18 @@ function Login(props) {
     submitting,
     _error,
     logout,
-    actions: { toggleCreateAccount },
-    accounts: { createAccount },
+    actions: { toggleCreateAccount, deleteAccount, push },
+    accounts: { createAccount, currentUser },
+    actionThunk,
   } = props;
 
-  const userId = Meteor.user();
-  console.log(userId);
-  console.log(!!userId);
+  console.log(currentUser);
+  console.log(!!currentUser);
   const onSubmit = createAccount ? onSubmitCreateAccount : onSubmitLogin;
+  const fullLogout = () => {
+    logout();
+    setTimeout(() => push('/'), 600);
+  }
 
   return (
     <div>
@@ -54,7 +60,7 @@ function Login(props) {
           Login to your account.
         </h1>
       </header>
-        <AccountsUIWrapper />
+        {/*<AccountsUIWrapper />*/}
         <form
           role="form"
           className={style.loginForm}
@@ -97,20 +103,28 @@ function Login(props) {
             label={createAccount ? 'Create Account' : 'Login'}
             disabled={submitting}
           />
-          {!!userId &&
+          {!!currentUser &&
             <Button
               type="button"
               label="Logout"
               disabled={submitting}
-              onClick={logout}
+              onClick={fullLogout}
             />
           }
-          {!userId && !createAccount &&
+          {!currentUser &&
             <Button
               type="button"
-              label="Create Account"
+              label={!createAccount ? 'Create Account' : 'Login'}
               disabled={submitting}
               onClick={toggleCreateAccount}
+            />
+          }
+          {!!currentUser &&
+            <Button
+              type="button"
+              label="Delete Account"
+              disabled={submitting}
+              onClick={actionThunk(deleteAccount, currentUser._id)}
             />
           }
         </form>
@@ -165,7 +179,7 @@ function logout() {
   });
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return { accounts: state.accounts };
 }
 
@@ -183,5 +197,5 @@ export default compose(
     form: ACCOUNTS_FORM,
     fields,
   }),
-  withProps({ onSubmitLogin, onSubmitCreateAccount, logout }),
+  withProps({ onSubmitLogin, onSubmitCreateAccount, logout, actionThunk }),
 )(Login);
