@@ -16,7 +16,6 @@ function accounts(state = initialState, action) {
         createAccount: !state.createAccount,
       };
     case DELETE_ACCOUNT:
-      console.log(action.payload)
       Meteor.users.remove(action.payload);
       return state;
     default:
